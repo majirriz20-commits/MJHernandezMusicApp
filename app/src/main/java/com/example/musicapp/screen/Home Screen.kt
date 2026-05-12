@@ -32,6 +32,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -59,13 +61,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.example.musicapp.components.AlbumItem
+import com.example.musicapp.components.RecentlyPlayedItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     innerPadding: PaddingValues = PaddingValues(10.dp),
     navController: NavController = rememberNavController(),
-    onAlbumClick: (Int) -> Unit = {}
+    onAlbumClick: (String) -> Unit = { }
 ){
     val BASE_URL = "https://musicapi.pjasoft.com/"
     var albums by remember { mutableStateOf<List<Album>>(emptyList()) }
@@ -103,7 +107,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 80.dp)
+                .padding(bottom = 100.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             //Header
@@ -175,7 +179,7 @@ fun HomeScreen(
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.height(200.dp)
+                modifier = Modifier.height(240.dp)
             ) {
                 items(albums){ album ->
                     AlbumItem(
@@ -205,131 +209,27 @@ fun HomeScreen(
                     fontSize = 14.sp
                 )
             }
-            albums.forEach { album ->
-                RecentlyPlayedItem(
-                    album = album,
-                    onClick = { onAlbumClick(album.id) }
-                )
+            Column(
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
+                albums.forEach { album ->
+                    RecentlyPlayedItem(
+                        album = album,
+                        onClick = { onAlbumClick(album.id) }
+                    )
+                }
             }
         }
         MiniPlayer(
             album = albums.firstOrNull() ?: return@Box,
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp)
         )
     }
 
-
-
 }
 
-
-@Composable
-fun AlbumItem(album: Album, onClick: () -> Unit = { }){
-    Card(
-        modifier = Modifier
-            .width(160.dp)
-            .fillMaxHeight()
-            .clickable { onClick() },
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
-    ) {
-        Box {
-            AsyncImage(
-                model = album.image,
-                contentDescription = album.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(colors = listOf(Color.Transparent, Color(0xCC000000)))
-                    )
-            )
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = album.title,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 13.sp,
-                    maxLines = 1
-                )
-                Text(
-                    text = album.artist,
-                    color = Color.LightGray,
-                    fontSize = 11.sp,
-                    maxLines = 1
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-                    .size(32.dp)
-                    .background(Color.White, shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ){
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Play",
-                    tint = Color(0xFF7B2FBE),
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun RecentlyPlayedItem(album: Album, onClick: () -> Unit = {}){
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .clickable { onClick() },
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(2.dp)
-    ) {
-        Row(
-            modifier = Modifier.padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(
-                model = album.image,
-                contentDescription = album.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(RoundedCornerShape(8.dp))
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = album.title,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp
-                )
-                Text(
-                    text = "${album.artist} • Popular Song",
-                    color = Color.Gray,
-                    fontSize = 12.sp
-                )
-            }
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                contentDescription = "More",
-                tint = Color.Gray
-            )
-        }
-    }
-}
 
 @Composable
 fun MiniPlayer(

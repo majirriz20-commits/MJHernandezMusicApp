@@ -1,7 +1,7 @@
 package com.example.musicapp.models
 
 data class Album(
-    val id: Int,
+    val id: String,
     val title: String,
     val artist: String,
     val description: String,
@@ -10,70 +10,70 @@ data class Album(
 
 val albumList = listOf(
     Album(
-        id = 1,
+        id = "1",
         title = "The Dark Side of the Moon",
         artist = "Pink Floyd",
         description = "Album conceptual de 1973 que explora temas como el conflicto, la avaricia, el tiempo y la enfermedad mental.",
         image = "https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png"
     ),
     Album(
-        id = 2,
+        id = "2",
         title = "Abbey Road",
         artist = "The Beatles",
         description = "Undecimo album de estudio de The Beatles, lanzado en 1969, famoso por su portada y su medley en el lado B.",
         image = "https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg"
     ),
     Album(
-        id = 3,
+        id = "3",
         title = "Thriller",
         artist = "Michael Jackson",
         description = "Album de 1982 que se convirtio en el mas vendido de la historia, con exitos como Billie Jean y Beat It.",
         image = "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png"
     ),
     Album(
-        id = 4,
+        id = "4",
         title = "Back in Black",
         artist = "AC/DC",
         description = "Septimo album de estudio de AC/DC, lanzado en 1980 como tributo al fallecido vocalista Bon Scott.",
         image = "https://upload.wikimedia.org/wikipedia/commons/9/91/ACDC_Back_in_Black.png"
     ),
     Album(
-        id = 5,
+        id = "5",
         title = "Rumours",
         artist = "Fleetwood Mac",
         description = "Album de 1977 que captura las tensiones romanticas dentro de la banda, con clasicos como Go Your Own Way.",
         image = "https://upload.wikimedia.org/wikipedia/en/f/fb/FMacRumours.PNG"
     ),
     Album(
-        id = 6,
+        id = "6",
         title = "Nevermind",
         artist = "Nirvana",
         description = "Segundo album de Nirvana, lanzado en 1991, que llevo el grunge al mainstream con Smells Like Teen Spirit.",
         image = "https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg"
     ),
     Album(
-        id = 7,
+        id = "7",
         title = "OK Computer",
         artist = "Radiohead",
         description = "Tercer album de Radiohead, de 1997, una obra introspectiva sobre la alienacion en la era moderna.",
         image = "https://upload.wikimedia.org/wikipedia/en/b/ba/Radioheadokcomputer.png"
     ),
     Album(
-        id = 8,
+        id = "8",
         title = "Lemonade",
         artist = "Beyonce",
         description = "Album visual de 2016 que aborda la infidelidad, el empoderamiento femenino y la identidad afroamericana.",
         image = "https://upload.wikimedia.org/wikipedia/en/a/a8/Beyonce_-_Lemonade_%28Official_Album_Cover%29.png"
     ),
     Album(
-        id = 9,
+        id = "9",
         title = "Random Access Memories",
         artist = "Daft Punk",
         description = "Cuarto album de Daft Punk, de 2013, con un sonido organico inspirado en la musica de los 70 y 80.",
         image = "https://upload.wikimedia.org/wikipedia/en/a/a7/Random_Access_Memories.jpg"
     ),
     Album(
-        id = 10,
+        id = "10",
         title = "To Pimp a Butterfly",
         artist = "Kendrick Lamar",
         description = "Tercer album de estudio de Kendrick Lamar, de 2015, que mezcla jazz, funk y hip-hop con una potente narrativa social.",

@@ -31,25 +31,35 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MusicAppTheme {
-                Scaffold( modifier = Modifier.fillMaxSize() ) {
-                    val navController = rememberNavController()
-                    // Quitamos el Scaffold de aquí para que no estorbe
+                val navController = rememberNavController()
+                Scaffold( modifier = Modifier.fillMaxSize() ) { innerPadding ->
+
                     NavHost(
                         navController = navController,
-                        startDestination = "albums"
+                        startDestination = "albums" ,
+                        modifier = Modifier.padding(innerPadding)
                     ) {
+                        //Home Screen
                         composable(route = "albums") {
-                            HomeScreen(navController = navController)
+                            HomeScreen(
+                                navController = navController,
+                                onAlbumClick = { id ->
+                                    navController.navigate("albums/$id")
+                                }
+                            )
                         }
+                        //Detail Screen
                         composable(
                             route = "albums/{id}",
-                            arguments = listOf(navArgument("id") { type = NavType.IntType })
+                            arguments = listOf(navArgument("id") { type = NavType.StringType })
                         ) { backStack ->
-                            val id = backStack.arguments?.getInt("id") ?: 0
-                            /*ProductDetailScreen(
+                            val id = backStack.arguments?.getString("id")
+                            /*
+                            DetailScreen(
                                 id = id,
-                                onBackClick = { navController.popBackStack() }
-                            )*/
+                                navController = navController
+                            )
+                            * */
                         }
                     }
                 }
