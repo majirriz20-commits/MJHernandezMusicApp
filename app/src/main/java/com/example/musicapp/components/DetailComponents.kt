@@ -24,12 +24,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,8 @@ import coil.compose.AsyncImage
 import com.example.musicapp.models.Album
 import com.example.musicapp.screen.HomeScreen
 import com.example.musicapp.ui.theme.MusicAppTheme
+import coil.compose.AsyncImage
+import androidx.compose.material3.Surface
 
 //Header
 @Composable
@@ -51,7 +55,7 @@ fun Header(album: Album, onBack: () -> Unit){
             model = album.image,
             contentDescription = null,
             modifier = Modifier. fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillBounds
         )
         Box(modifier = Modifier
             .fillMaxSize()
@@ -119,6 +123,13 @@ fun AboutAlbum(album: Album){
                 fontSize = 14.sp,
                 lineHeight = 20.sp
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = album.description,
+                color = Color.Gray,
+                fontSize = 13.sp,
+                lineHeight = 20.sp
+            )
         }
     }
 }
@@ -158,6 +169,26 @@ fun TrackItem(album: Album, track: Int){
         Icon(
             imageVector = Icons.Default.MoreVert,
             contentDescription = null, tint = Color.Gray)
+    }
+}
+
+@Composable
+fun ArtistChip(artist: String) {
+    Box(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+    ) {
+        Surface(
+            shape = RoundedCornerShape(50),
+            color = Color(0xFFEDE7F6)
+        ) {
+            Text(
+                text = "Artist: $artist",
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF4A148C)
+            )
+        }
     }
 }
 

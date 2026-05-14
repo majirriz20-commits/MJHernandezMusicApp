@@ -273,11 +273,11 @@ fun MiniPlayer(
             Icon(
                 imageVector = Icons.Default.PlayArrow,
                 contentDescription = "Play",
-                tint = Color.White,
+                tint =Color(0xFF1A1A2E),
                 modifier = Modifier
+                    .size(36.dp)
                     .background(Color.White, shape = CircleShape)
                     .padding(4.dp)
-                    .size(24.dp)
             )
         }
     }

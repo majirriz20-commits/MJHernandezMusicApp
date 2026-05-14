@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
+        android:name=".MyApplication"
         android:theme="@style/Theme.MusicApp" >
         <activity
             android:name=".MainActivity"

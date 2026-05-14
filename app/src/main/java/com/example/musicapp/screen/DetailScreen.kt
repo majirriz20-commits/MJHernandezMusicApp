@@ -1,5 +1,6 @@
 package com.example.musicapp.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.musicapp.components.AboutAlbum
+import com.example.musicapp.components.ArtistChip
 import com.example.musicapp.components.Header
 import com.example.musicapp.components.TrackItem
 import com.example.musicapp.models.Album
@@ -49,7 +51,9 @@ fun DetailScreen(
                 .build()
             val service = retrofit.create(AlbumService::class.java)
             album = withContext(Dispatchers.IO) { service.getAlbumById(Albumid ?: "") }
+            Log.d("DetailScreen", "Album: $album")  // ← agrega esto
         } catch (e: Exception) {
+            Log.e("DetailScreen", "Error: ${e.message}")
             hasError = true
         } finally {
             isLoading = false
@@ -70,7 +74,7 @@ fun DetailScreen(
                 //About album
                 item { AboutAlbum(currentAlbum) }
                 //Chip de artista
-                //item { ArtistChip(currentAlbum.artist) }
+                item { ArtistChip(currentAlbum.artist) }
                 //Tracks
                 items(10) { index ->
                     TrackItem(currentAlbum, index + 1)

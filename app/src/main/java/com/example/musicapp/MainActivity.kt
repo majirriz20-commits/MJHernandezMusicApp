@@ -36,15 +36,12 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "albums" ,
+                        startDestination = "home" ,
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         //Home Screen
-                        composable(route = "albums/{id}",
-                            arguments = listOf(navArgument("id"){type = NavType.StringType})
-                            ) {backStack ->
-                            val id = backStack.arguments?.getString("id") ?: ""
-                            DetailScreen(Albumid = id, navController = navController)
+                        composable(route = "home")
+                        {
                             HomeScreen(
                                 navController = navController,
                                 onAlbumClick = { id ->
