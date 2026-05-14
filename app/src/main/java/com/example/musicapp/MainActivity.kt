@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.musicapp.screen.DetailScreen
 import com.example.musicapp.screen.HomeScreen
 import com.example.musicapp.ui.theme.MusicAppTheme
 
@@ -40,7 +40,11 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         //Home Screen
-                        composable(route = "albums") {
+                        composable(route = "albums/{id}",
+                            arguments = listOf(navArgument("id"){type = NavType.StringType})
+                            ) {backStack ->
+                            val id = backStack.arguments?.getString("id") ?: ""
+                            DetailScreen(Albumid = id, navController = navController)
                             HomeScreen(
                                 navController = navController,
                                 onAlbumClick = { id ->
@@ -54,12 +58,11 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument("id") { type = NavType.StringType })
                         ) { backStack ->
                             val id = backStack.arguments?.getString("id")
-                            /*
+
                             DetailScreen(
-                                id = id,
+                                Albumid = id,
                                 navController = navController
                             )
-                            * */
                         }
                     }
                 }
@@ -77,5 +80,9 @@ class MainActivity : ComponentActivity() {
 fun GreetingPreview() {
     MusicAppTheme {
         HomeScreen(innerPadding = PaddingValues(10.dp))
+        DetailScreen(
+            Albumid = "1",
+            navController = rememberNavController()
+        )
     }
 }
